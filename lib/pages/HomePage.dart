@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone_flutter/widgets/CallsWidget.dart';
+import 'package:whatsapp_clone_flutter/widgets/Camera.dart';
 import 'package:whatsapp_clone_flutter/widgets/ChatsWidget.dart';
 import 'package:whatsapp_clone_flutter/widgets/StatusWidget.dart';
 
@@ -97,7 +98,8 @@ class HomePage extends StatelessWidget {
                 isScrollable: true,
                 indicatorColor: Colors.white,
                 indicatorWeight: 4,
-                labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                labelStyle:
+                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 tabs: [
                   Container(
                     width: 24,
@@ -142,7 +144,7 @@ class HomePage extends StatelessWidget {
               flex: 1,
               child: TabBarView(
                 children: [
-                  Container(color: Colors.black), // Tab 1 - Câmera
+                  PickImage(), // Tab 1 - Câmera
                   ChatsWidget(), // Tab 2 - Conversas
                   StatusWidget(), // Tab 3 - Status
                   CallsWidget(), // Tab 4 - Chamadas
@@ -152,10 +154,9 @@ class HomePage extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: (){},
+          onPressed: () {},
           backgroundColor: Color(0xFF075E55),
           child: Icon(Icons.message),
-
         ),
       ),
     );
