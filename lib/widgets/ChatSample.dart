@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:custom_clippers/custom_clippers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatSample extends StatelessWidget {
+  final String receivedMessage = "Olá, tudo bem? Me manda o CEP do Senai";
+  final String sentMessage = "Tudo sim, baby! e você como está? Irei mandar";
+  final String cepMessage = "42700-000"; 
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,7 +22,7 @@ class ChatSample extends StatelessWidget {
                 color: Colors.white,
               ),
               child: Text(
-                "Olá, tudo bem?",
+                receivedMessage,
                 style: TextStyle(fontSize: 17),
               ),
             ),
@@ -28,16 +33,45 @@ class ChatSample extends StatelessWidget {
           margin: EdgeInsets.only(top: 20, left: 80, bottom: 15),
           child: ClipPath(
             clipper: UpperNipMessageClipperTwo(MessageType.send),
-            child: Container(
-              padding:
-                EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 20),
-              decoration: BoxDecoration(
-                color: Color(0xFFE4FDCA),
+            child: GestureDetector(
+              onTap: () {
+                launchMaps("42700-000"); 
+              },
+              child: Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xFFE4FDCA),
+                ),
+                child: Text(
+                  sentMessage,
+                  style: TextStyle(fontSize: 17),
+                ),
               ),
-              child: Text(
-                "Tudo sim, baby! e você como está?",
-
-                style: TextStyle(fontSize: 17),
+            ),
+          ),
+        ),
+        Container(
+          alignment: Alignment.centerRight,
+          margin: EdgeInsets.only(top: 20, left: 80, bottom: 15),
+          child: ClipPath(
+            clipper: UpperNipMessageClipperTwo(MessageType.send),
+            child: GestureDetector(
+              onTap: () {
+                launchMaps("42700-000"); 
+              },
+              child: Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xFFE4FDCA),
+                ),
+                child: Text(
+                  "$cepMessage", // Exibir o CEP como um link
+                  style: TextStyle(
+                    fontSize: 17,
+                    decoration: TextDecoration.underline,
+                    color: Colors.blue,
+                  ),
+                ),
               ),
             ),
           ),
@@ -45,4 +79,14 @@ class ChatSample extends StatelessWidget {
       ],
     );
   }
+
+  void launchMaps(String cep) async {
+    final url = 'https://www.google.com/maps/search/?api=1&query=$cep';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
+
